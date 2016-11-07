@@ -1,0 +1,40 @@
+<h1>Detalle de pedido</h1>
+
+<div class="panel panel-default col-xs-12 no-padding">
+  <div class="panel-heading">
+    <h3 class="panel-title">Proveedor</h3>
+  </div>
+  <div class="panel-body">
+    <p><b>{{ pedido.proveedor.razon_social }} -  {{ pedido.proveedor.cuit }} </b></p>
+    <!--p><b>Direccion:</b>
+      { pedido.proveedor.direccion.calle }} { pedido.proveedor.direccion.numero }}
+      { pedido.proveedor.direccion.piso }} { pedido.proveedor.direccion.departamento }}
+    </p>
+    <p><b>Provincia:</b> { pedido.proveedor.direccion.provincia.nombre }}</p-->
+    <p><b>Telefono:</b> {{ pedido.proveedor.telefono }}</p>
+    <p><b>Email:</b> {{ pedido.proveedor.email }}</p>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <th>Producto</th>
+    <th>Cantidad</th>
+    <th>Precio Unitario</th>
+    <th>Subtotal</th>
+  </thead>
+  <tfoot>
+    <td></td>
+    <td></td>
+    <td><b class="pull-right">Total</b></td>
+    <td class="total">{{ pedido.importe }}</td>
+  </tfoot>
+  <tbody ng-repeat="producto in pedido.productos">
+    <tr>
+      <td>{{ producto.descripcion }}</td>
+      <td>{{ producto.cantidad }}</td>
+      <td>{{ producto.precio }}</td>
+      <td>{{ producto.precio * producto.cantidad }}</td>
+    </tr>
+  </tbody>
+</table>

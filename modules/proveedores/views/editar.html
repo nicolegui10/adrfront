@@ -1,0 +1,90 @@
+<h1>Editar Proveedor</h1>
+<form name="form" novalidate>
+  <div class="row">
+    <div class="form-group col-xs-12 col-sm-6">
+      <label for="cuit">CUIT</label>
+      <input type="text" class="form-control" id="cuit" name="cuit" ng-model="proveedor.cuit" required>
+      <span class="help-block text-danger"
+          ng-show="form.cuit.$dirty && form.cuit.$invalid">
+        <span ng-show="form.cuit.$dirty && form.cuit.$error.required"
+            class="text-danger">
+          Este campo es obligatorio
+        </span>
+      </span>
+    </div>
+    <div class="form-group col-xs-12 col-sm-6">
+      <label for="apellido">Razon Social</label>
+      <input type="text" class="form-control" id="razon_social" name="razon_social"
+          ng-model="proveedor.razon_social" required>
+      <span class="help-block text-danger"
+          ng-show="form.razon_social.$dirty && form.razon_social.$invalid">
+        <span ng-show="form.razon_social.$dirty && form.razon_social.$error.required"
+            class="text-danger">
+          Este campo es obligatorio
+        </span>
+      </span>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Direccion</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group col-xs-12 col-sm-6">
+        <label for="calle">Calle</label>
+        <input type="text" class="form-control" id="calle" name="calle" ng-model="proveedor.direccion[0].calle" required>
+        <span class="help-block text-danger"
+            ng-show="form.calle.$dirty && form.calle.$invalid">
+          <span ng-show="form.calle.$dirty && form.calle.$error.required"
+              class="text-danger">
+            Este campo es obligatorio
+          </span>
+        </span>
+      </div>
+      <div class="form-group col-xs-12 col-sm-2">
+        <label for="numero">Numero</label>
+        <input type="text" class="form-control" id="numero" name="numero" ng-model="proveedor.direccion[0].numero" required>
+        <span class="help-block text-danger"
+            ng-show="form.numero.$dirty && form.numero.$invalid">
+          <span ng-show="form.numero.$dirty && form.numero.$error.required"
+              class="text-danger">
+            Este campo es obligatorio
+          </span>
+        </span>
+      </div>
+      <div class="form-group col-xs-12 col-sm-2">
+        <label for="piso">Piso</label>
+        <input type="text" class="form-control" id="piso" name="piso" ng-model="proveedor.direccion[0].piso">
+      </div>
+      <div class="form-group col-xs-12 col-sm-2">
+        <label for="departamento">Departamento</label>
+        <input type="text" class="form-control" id="departamento" name="departamento" ng-model="proveedor.direccion[0].departamento">
+      </div>
+      <div class="form-group col-xs-6">
+        <label for="telefono">Telefono</label>
+        <input type="text" class="form-control" id="telefono" name="telefono" ng-model="proveedor.direccion[0].telefono" required>
+      </div>
+      <div class="form-group col-xs-6">
+        <label for="provincia">Provincia</label>
+        <select name="provincia" class="form-control" ng-model="proveedor.provincia" required
+            ng-options="provincia.id as provincia.nombre for provincia in provincias">
+          <option value=""></option>
+        </select>
+        <span class="help-block text-danger"
+            ng-show="form.provincia.$dirty && form.provincia.$invalid">
+          <span ng-show="form.provincia.$dirty && form.provincia.$error.required"
+              class="text-danger">
+            Este campo es obligatorio
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <label class="show">&nbsp;</label>
+      <button type="submit" class="btn btn-primary show pull-right" ng-disabled="form.$invalid || form.$pristine"
+          ng-click="editar()">Editar</button>
+    </div>
+  </div>
+</form>
