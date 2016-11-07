@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1>Pedidos <small><a class="btn btn-success btn-gepro pull-right" href="/#/pedidos/crear" role="button">Nuevo</a></small></h1>
+</div>
+<table class="table table-stripped">
+  <thead>
+    <td>Proveedor</td>
+    <td>Descripcion</td>
+    <td>Fecha de creacion</td>
+    <td>Estado del Pedido</td>
+    <td>Fecha de entrega</td>
+    <td>Total</td>
+    <td class="text-right">Acciones</td>
+  </thead>
+  <tr ng-repeat="pedido in pedidos">
+    <td>{{ pedido.proveedor.razon_social }}</td>
+    <td class="table-text">
+      <div>{{ pedido.descripcion | limitTo: 30 }} {{pedido.descripcion.length > 20 ? '...' : ''}}</div>
+    </td>
+    <td>{{ pedido.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}</td>
+    <td>{{pedido.estado}}</td>
+    <td ng-if="pedido.fecha_entrega.length > 1">{{pedido.fecha_entrega | date:'medium'}}</td>
+    <td ng-if="pedido.fecha_entrega.length < 1"> - </td>
+    <td>{{pedido.importe}}</td>
+    <td class="text-right">
+      <a type="button" class="btn btn-success btn-gepro" href="/#/pedidos/{{ pedido.id }}">Ver</a>
+      <a type="button" class="btn btn-info" href="/#/pedidos/{{ pedido.id }}">Editar</a>
+    </td>
+  </tr>
+</table>
