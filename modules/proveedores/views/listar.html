@@ -10,16 +10,18 @@
     <td>Nombre</td>
     <td>Email</td>
     <td>Telefono</td>
-    <td class="text-right">Acciones</td>
+    <td>Domicilio</td>
+    <td class="text-center">Acciones</td>
   </thead>
   <tr ng-repeat="proveedor in proveedores">
     <td>{{ proveedor.cuit }}</td>
-    <td>{{ proveedor.razon_social }}</td>
+    <td>{{ proveedor.nombre }}</td>
     <td>{{ proveedor.email }}</td>
     <td>{{ proveedor.telefono }}</td>
-    <td class="text-right">
+    <td>{{ proveedor.domicilio }}</td>
+    <td class="text-center">
       <div class="btn-group">
-        <a type="button" class="btn btn-info" href="/#/proveedores/{{ proveedor.cuit }}/editar">Editar</a>
+        <a type="button" class="btn btn-info" ui-sref="editar-proveedor({proveedorId: proveedor.id})">Editar</a>
         <button type="submit" class="btn btn-danger" ng-click="eliminar(proveedor.cuit)">Eliminar</button>
       </div>
     </td>

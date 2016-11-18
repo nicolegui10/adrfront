@@ -1,42 +1,29 @@
 angular.module('gepro.proveedores')
-    .controller('ProveedoresListarController', function ($scope, $http, $timeout) {
+    .controller('ProveedoresListarController', function (AuthService, $scope, $http, $timeout, $location) {
+
+      var apiUrl = 'https://adr-utn.herokuapp.com/api/v1/';
+      AuthService.isLogged().then(function () {
+        init();  
+      }, function() {
+          $location.path('/');
+      });  
 
       var init = function () {
-        /*$http({
+       $http({
           method: 'GET',
-          url: 'api/proveedores'
+          url: apiUrl + 'proveedores'
         }).then(function (response) {
+          console.log(response);
           $scope.proveedores = response.data;
-        });*/
-        $scope.proveedores =                         [  
-                 {  
-                    "id":"1",
-                    "razon_social":"DELL",
-                    "cuit":"30123456782",
-                    "email":"info@dell.com",
-                    "telefono":"0115570202"
-                 },
-                 {  
-                    "id":"2",
-                    "razon_social":"ASUS",
-                    "cuit":"2012345678",
-                    "email":"info@asus.com",
-                    "telefono":"0115123344"
-                 },
-                 {  
-                    "id":"3",
-                    "razon_social":"INTEL",
-                    "cuit":"40998877661",
-                    "email":"info@intel.com",
-                    "telefono":"0115667722"
-                 }
-              ]
+        });
       };
 
       $scope.eliminar = function (id) {
-        $http({
+        var result = confirm ("¿Esta seguro que desea eliminar este proveedor?");
+        if(result){
+          $http({
           method: 'DELETE',
-          url: 'api/proveedores/' + id
+          url: apiUrl + 'proveedores/' + id
         }).then(function (response) {
           init();
         }, function () {
@@ -45,8 +32,7 @@ angular.module('gepro.proveedores')
             $scope.deleteError = false;
           }, 5000);
         });
+        }
       };
-
-      init();
 
     });

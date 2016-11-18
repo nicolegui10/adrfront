@@ -1,11 +1,11 @@
 angular.module('gepro.auth', [])
     .config([
-      '$routeProvider',
-      function ($routeProvider) {
-
-        $routeProvider
-            .when('/login', {
-              controller: 'AuthController',
+      '$stateProvider',
+      function ($stateProvider) {
+        $stateProvider
+            .state('login', {
+              url: '/login',
               templateUrl: 'modules/auth/views/login.html',
+              controller: 'AuthController'
             });
       }]);

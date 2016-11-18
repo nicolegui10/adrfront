@@ -1,40 +1,43 @@
-<h1>Detalle de pedido</h1>
-
+<div print-section>
 <div class="panel panel-default col-xs-12 no-padding">
   <div class="panel-heading">
-    <h3 class="panel-title">Proveedor</h3>
+    <h2 class="panel-title"><b>Detalle del Pedido</b></h2>
   </div>
   <div class="panel-body">
-    <p><b>{{ pedido.proveedor.razon_social }} -  {{ pedido.proveedor.cuit }} </b></p>
-    <!--p><b>Direccion:</b>
-      { pedido.proveedor.direccion.calle }} { pedido.proveedor.direccion.numero }}
-      { pedido.proveedor.direccion.piso }} { pedido.proveedor.direccion.departamento }}
-    </p>
-    <p><b>Provincia:</b> { pedido.proveedor.direccion.provincia.nombre }}</p-->
-    <p><b>Telefono:</b> {{ pedido.proveedor.telefono }}</p>
-    <p><b>Email:</b> {{ pedido.proveedor.email }}</p>
+    <p><b>Proveedor: {{ pedido.proveedor}}</b></p>
+    <p><b>Descripcion: {{ pedido.descripcion}}</b></p>
+    <p><b>Estado del Pedido: {{ pedido.estado}}</b> </p>
   </div>
 </div>
-
 <table class="table">
   <thead>
     <th>Producto</th>
-    <th>Cantidad</th>
-    <th>Precio Unitario</th>
-    <th>Subtotal</th>
+    <th class="text-center">Cantidad</th>
+    <th class="text-center">Precio Unitario</th>
+    <th class="text-center">Subtotal</th>
   </thead>
   <tfoot>
     <td></td>
     <td></td>
     <td><b class="pull-right">Total</b></td>
-    <td class="total">{{ pedido.importe }}</td>
+    <td class="text-center total">{{ pedido.importe }}</td>
   </tfoot>
-  <tbody ng-repeat="producto in pedido.productos">
+  <tbody ng-repeat="producto in pedido.items">
     <tr>
-      <td>{{ producto.descripcion }}</td>
-      <td>{{ producto.cantidad }}</td>
-      <td>{{ producto.precio }}</td>
-      <td>{{ producto.precio * producto.cantidad }}</td>
+      <td >{{ producto.descripcion }} {{producto.marca}}</td>
+      <td class="text-center">{{ producto.cantidad }}</td>
+      <td class="text-center">{{ producto.precio }}</td>
+      <td class="text-center">{{ producto.precio * producto.cantidad }}</td>
     </tr>
   </tbody>
 </table>
+</div>
+<br>
+ <div class="col-xs-12 margin-bottom">
+    <button type="submit" class="btn btn-primary pull-right"
+        ng-click="finalizarPedido()">Finalizar</button>
+    <button type="submit" class="btn btn-danger pull-right eliminar-btn"
+        ng-click="eliminarPedido()">Eliminar</button>
+    <button type="submit" class="btn btn-success pull-right eliminar-btn" print-btn>Imprimir</button>
+  </div>
+

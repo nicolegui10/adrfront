@@ -9,17 +9,18 @@
     <td>Descripcion</td>
     <td>Marca</td>
     <td>Precio</td>
-    <td class="text-right">Acciones</td>
+    <td>Proveedor</td>
+    <td class="text-center">Acciones</td>
   </thead>
   <tr ng-repeat="producto in productos">
     <td class="table-text">
       <div>{{ producto.descripcion }}</div>
     </td>
     <td>{{ producto.marca }}</td>
-    <td>{{ producto.precio }}</td>
-    <td class="text-right">
+    <td>${{ producto.precio }}</td>
+    <td>{{ producto.proveedor }}</td>
+    <td class="text-center">
       <div class="btn-group">
-        <a type="button" class="btn btn-info" href="/#/productos/{{ producto.id }}/editar">Editar</a>
         <button type="submit" class="btn btn-danger" ng-click="eliminar(producto.id)">Eliminar</button>
       </div>
     </td>

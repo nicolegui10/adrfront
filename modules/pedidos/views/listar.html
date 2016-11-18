@@ -3,27 +3,23 @@
 </div>
 <table class="table table-stripped">
   <thead>
-    <td>Proveedor</td>
-    <td>Descripcion</td>
-    <td>Fecha de creacion</td>
-    <td>Estado del Pedido</td>
-    <td>Fecha de entrega</td>
-    <td>Total</td>
-    <td class="text-right">Acciones</td>
+    <td><b>Proveedor</b></td>
+    <td><b>Descripcion</b></td>
+    <td><b>Estado del Pedido</b></td>
+    <td><b>Total</b></td>
+    <td class="text-center">Acciones</td>
   </thead>
   <tr ng-repeat="pedido in pedidos">
-    <td>{{ pedido.proveedor.razon_social }}</td>
+    <td>{{ pedido.proveedor }}</td>
     <td class="table-text">
       <div>{{ pedido.descripcion | limitTo: 30 }} {{pedido.descripcion.length > 20 ? '...' : ''}}</div>
     </td>
-    <td>{{ pedido.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}</td>
     <td>{{pedido.estado}}</td>
-    <td ng-if="pedido.fecha_entrega.length > 1">{{pedido.fecha_entrega | date:'medium'}}</td>
-    <td ng-if="pedido.fecha_entrega.length < 1"> - </td>
     <td>{{pedido.importe}}</td>
-    <td class="text-right">
-      <a type="button" class="btn btn-success btn-gepro" href="/#/pedidos/{{ pedido.id }}">Ver</a>
-      <a type="button" class="btn btn-info" href="/#/pedidos/{{ pedido.id }}">Editar</a>
+    <td class="text-center">
+      <a type="button" class="btn btn-success btn-gepro" ui-sref="pedido({pedidoId: pedido.id})">Ver</a>
+      <a type="button" class="btn btn-info" ng-click="finalizarPedido(pedido.id)" ng-show="pedido.estado != 'FINALIZADO'">Finalizar</a>
+      <a type="button" class="btn btn-danger" ng-click="eliminarPedido(pedido.id)">Eliminar</a>
     </td>
   </tr>
 </table>

@@ -1,5 +1,12 @@
 angular.module('gepro.productos')
-    .controller('ProductosEditarController', function ($scope, $http, $location, $routeParams) {
+    .controller('ProductosEditarController', function (AuthService, $scope, $http, $location, $routeParams) {
+
+      
+      AuthService.isLogged().then(function () {
+        init();
+      }, function() {
+          $location.path('/');
+      }); 
 
       $scope.editar = function () {
         $http({
@@ -23,11 +30,14 @@ angular.module('gepro.productos')
         $scope.errors = undefined;
       }
 
-      $http({
+      var init = function() {
+        $http({
         method: 'GET',
         url: 'api/productos/' + $routeParams.productoId
-      }).then(function (response) {
-        $scope.producto = response.data;
-      });
+        }).then(function (response) {
+          $scope.producto = response.data;
+        });
+      }
+      
 
     });

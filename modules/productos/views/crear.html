@@ -1,6 +1,6 @@
 <h1>Nuevo Producto</h1>
 <form class="row" novalidate>
-  <div class="form-group col-xs-8">
+  <div class="form-group col-xs-6">
     <label for="descripcion">Descripcion</label>
     <input type="text" class="form-control" id="descripcion" ng-maxlength="100" autocomplete="off"
         name="descripcion" ng-model="producto.descripcion" ng-change="limpiar()" required>
@@ -18,7 +18,7 @@
       </span>
     </span>
   </div>
-  <div class="form-group col-xs-4">
+  <div class="form-group col-xs-6">
     <label for="precio">Precio</label>
     <input type="number" class="form-control" id="precio" min="0" autocomplete="off"
         name="precio" ng-model="producto.precio" required>
@@ -31,6 +31,38 @@
       </span>
       <span ng-show="form.precio.$dirty && form.precio.$error.min" class="text-danger">
         El minimo debe ser 0
+      </span>
+    </span>
+  </div>
+  <div class="form-group col-xs-6">
+    <label for="marca">Marca</label>
+    <input type="text" class="form-control" id="marca" ng-maxlength="30" autocomplete="off"
+        name="marca" ng-model="producto.marca" ng-change="limpiar()" required>
+    <span class="help-block text-danger"
+        ng-show="form.marca.$dirty && form.marca.$invalid || errors.marca">
+      <span ng-show="form.marca.$dirty && form.marca.$error.required && !errors.marca"
+          class="text-danger">
+        Este campo es obligatorio
+      </span>
+      <span ng-show="form.marca.$dirty && form.marca.$error.maxlength" class="text-danger">
+        Este campo debe tener un maximo de 30 caracteres
+      </span>
+      <span ng-show="errors.marca && !cargo.marca" class="text-danger">
+        {{ errors.marca }}
+      </span>
+    </span>
+  </div>
+  <div class="form-group col-xs-6">
+    <label for="descripcion">Proveedor</label>
+    <ui-select ng-model="options.selected" theme="bootstrap" name="proveedor" required>
+      <ui-select-match>{{ $select.selected.nombre }}</ui-select-match>
+      <ui-select-choices repeat="proveedor.id as proveedor in proveedores | filter: $select.search">
+        <div ng-bind-html="proveedor.nombre | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+    <span class="help-block text-danger" ng-show="form.proveedor.$dirty && form.proveedor.$invalid">
+      <span ng-show="form.proveedor.$dirty && form.proveedor.$error.required" class="text-danger">
+        Este campo es obligatorio
       </span>
     </span>
   </div>

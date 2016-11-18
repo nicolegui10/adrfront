@@ -1,18 +1,21 @@
 angular.module('gepro.proveedores', [])
     .config([
-      '$routeProvider',
-      function ($routeProvider) {
+      '$stateProvider',
+      function ($stateProvider) {
 
-        $routeProvider
-            .when('/proveedores', {
+        $stateProvider
+            .state('proveedores', {
+              url: '/proveedores',
               controller: 'ProveedoresListarController',
               templateUrl: 'modules/proveedores/views/listar.html',
             })
-            .when('/proveedores/crear', {
+            .state('crear-proveedor', {
+              url: '/proveedores/crear',
               controller: 'ProveedoresCrearController',
               templateUrl: 'modules/proveedores/views/crear.html',
             })
-            .when('/proveedores/:proveedorId/editar', {
+            .state('editar-proveedor', {
+              url: '/proveedores/:proveedorId/editar',
               controller: 'ProveedoresEditarController',
               templateUrl: 'modules/proveedores/views/editar.html',
             });

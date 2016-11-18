@@ -1,35 +1,41 @@
 angular.module('gepro.pedidos')
-    .controller('PedidosListarController', function ($scope, $http, $timeout) {
+    .controller('PedidosListarController', function (AuthService, $scope, $http, $timeout, $state) {
+      var apiUrl = 'https://adr-utn.herokuapp.com/api/v1/';
+      AuthService.isLogged().then(function () {
+            init();  
+          }, function() {
+            $state.go('/');
+          });  
 
       var init = function () {
-        /*$http({
+        $http({
           method: 'GET',
-          url: 'api/pedidos'
+          url: apiUrl + 'pedidos'
         }).then(function (response) {
           $scope.pedidos = response.data;
-        });*/
-        $scope.pedidos = 
-[  
-   {  
-      "id":"1",
-      "fecha_creacion":"2016-11-02T00:00:00Z",
-      "descripcion":"Compra de insumos para Empleado #123 para setear estacion de trabajo nueva.",
-      "importe":"5800",
-      "external_id":"4444-33333-11111",
-      "estado": "Realizado",
-      "fecha_entrega": "",
-      "proveedor":
-    {  
-      "id":"1",
-      "razon_social":"DELL",
-      "cuit":"30123456782",
-      "email":"info@dell.com",
-      "telefono":"0115570202"
-      }
-   }
-]
+          console.log($scope.pedidos);
+        });
       };
 
-      init();
+      $scope.finalizarPedido = function(id) {
+        $http({
+          method: 'PUT',
+          url: apiUrl + 'pedidos/' + id
+        }).then(function (response) {
+          $state.reload();
+        });
+      }
+
+      $scope.eliminarPedido = function (id) {
+        var result = confirm ("¿Estas seguro que desea eliminar este Pedido?");
+        if(result){
+          $http({
+          method: 'DELETE',
+          url: apiUrl + 'pedidos/' + id
+        }).then(function (response) {
+          $state.reload();
+        });
+        }
+      }
 
     });
