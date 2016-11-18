@@ -1,5 +1,5 @@
 angular.module('gepro.components', [])
-    .directive('geproMenu', function ($auth, $rootScope, $location) {
+    .directive('geproMenu', function (AuthService, $rootScope, $location, $window, $state) {
       return {
         templateUrl: 'components/Menu/Menu.html',
         restrict: 'E',
@@ -7,21 +7,18 @@ angular.module('gepro.components', [])
         replace: true,
         link: function (scope, element) {
 
+          AuthService.isLogged().then(function () {
+            scope.authenticated = true;  
+          }, function() {
+            $state.go('login');
+          });  
+
           scope.logout = function() {
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            $auth.logout().then(function() {
-
-              localStorage.removeItem('user');
-
-              $rootScope.authenticated = false;
-              $rootScope.currentUser = null;
-
-              $location.path('/');
-
-            });
+              $rootScope.authenticated = false;  
+              delete ($rootScope.user);
+              $window.localStorage.removeItem("token");
+              $state.go('login');
+              $rootScope.reload();
           }
 
         }

@@ -1,43 +1,29 @@
 angular.module('gepro.productos')
-    .controller('ProductosListarController', function ($scope, $http, $timeout) {
+    .controller('ProductosListarController', function (AuthService, $scope, $http, $timeout, $state) {
+
+      var apiUrl = 'https://adr-utn.herokuapp.com/api/v1/';
+      AuthService.isLogged().then(function () {
+            init();  
+          }, function() {
+            $state.go('login');
+      });  
 
       var init = function () {
-        /*$http({
+        $http({
           method: 'GET',
-          url: 'api/productos'
+          url: apiUrl + 'productos'
         }).then(function (response) {
           $scope.productos = response.data;
-        });*/
-        $scope.productos =
-[  
-   {  
-      "id":"1",
-      "descripcion":"RACK XQEW123",
-      "marca":"DELL",
-      "modelo":"2012",
-      "precio":"2000"
-   },
-   {  
-      "id":"2",
-      "descripcion":"MEMORIA RAM 4GB",
-      "marca":"GG",
-      "modelo":"2014",
-      "precio":"700"
-   },
-   {  
-      "id":"3",
-      "descripcion":"MONITOR 21''",
-      "marca":"ASUS",
-      "modelo":"2016",
-      "precio":"1200"
-   }
-]
-      };
+        });
+      };  
+
 
       $scope.eliminar = function (id) {
-        $http({
+        var result = confirm("¿Estas seguro que desea eliminar este producto?");
+        if(result) {
+          $http({
           method: 'DELETE',
-          url: 'api/productos/' + id
+          url: apiUrl + 'productos/' + id,
         }).then(function (response) {
           init();
         }, function () {
@@ -46,8 +32,8 @@ angular.module('gepro.productos')
             $scope.deleteError = false;
           }, 5000);
         });
+        }
+        
       };
-
-      init();
 
     });

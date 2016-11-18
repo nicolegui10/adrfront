@@ -1,19 +1,22 @@
 angular.module('gepro.productos', [])
     .config([
-      '$routeProvider',
-      function ($routeProvider) {
+      '$stateProvider',
+      function ($stateProvider) {
 
-        $routeProvider
-            .when('/productos', {
+        $stateProvider
+            .state('productos', {
+              url: '/productos',
               controller: 'ProductosListarController',
-              templateUrl: 'modules/productos/views/listar.html',
+              templateUrl: 'modules/productos/views/listar.html'
             })
-            .when('/productos/crear', {
+            .state('crear-producto', {
+              url: '/productos/crear',
               controller: 'ProductosCrearController',
-              templateUrl: 'modules/productos/views/crear.html',
+              templateUrl: 'modules/productos/views/crear.html'
             })
-            .when('/productos/:productoId/editar', {
+            .state('editar-producto', {
+              url: '/productos/:productoId/editar',
               controller: 'ProductosEditarController',
-              templateUrl: 'modules/productos/views/editar.html',
+              templateUrl: 'modules/productos/views/editar.html'
             });
       }]);

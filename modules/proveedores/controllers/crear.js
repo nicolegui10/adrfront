@@ -1,26 +1,22 @@
 angular.module('gepro.proveedores')
-    .controller('ProveedoresCrearController', function ($scope, $http, $location) {
+    .controller('ProveedoresCrearController', function (AuthService, $scope, $http, $state) {
+
+      var apiUrl = 'https://adr-utn.herokuapp.com/api/v1/';
+      AuthService.isLogged().then(function () {
+          }, function() {
+            $state.go('login');
+      });  
 
       $scope.proveedor = {};
 
-      var init = function () {
-        $http({
-          method: 'GET',
-          url: 'api/provincias'
-        }).then(function (response) {
-          $scope.provincias = response.data;
-        });
-      };
 
       $scope.crear = function () {
         $http({
           method: 'POST',
-          url: 'api/proveedores',
+          url: apiUrl + 'proveedores',
           data: $scope.proveedor
         }).then(function () {
-          $location.path('proveedores');
+          $state.go('proveedores');
         });
       };
-
-      init();
     });

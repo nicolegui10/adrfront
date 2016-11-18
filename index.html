@@ -3,6 +3,7 @@
 <head>
   <link rel="icon" href="resources/imagenes/icono.png"> 
   <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+  <link rel="stylesheet" href="resources/css/angularPrint.css">
   <link rel="stylesheet" href="resources/css/select.css">
   <link rel="stylesheet" href="resources/css/datepicker.css">
   <link rel="stylesheet" href="resources/css/style.css">
@@ -10,18 +11,23 @@
   <script src="resources/js/angular.min.js"></script>
   <script src="resources/js/angular-sanitize.min.js"></script>
   <script src="resources/js/angular-resource.min.js"></script>
-  <script src="resources/js/angular-route.min.js"></script>
+  <script src="resources/js/angular-ui-router.min.js"></script>
   <script src="resources/js/moment.min.js"></script>
   <script src="resources/js/select.min.js"></script>
   <script src="resources/js/jquery.min.js"></script>
   <script src="resources/js/bootstrap.min.js"></script>
   <script src="resources/js/datepicker.js"></script>
   <script src="resources/js/satellizer.min.js"></script>
+  <script src="resources/js/angularPrint.js"></script>
 
 
   <script src="gepro.js"></script>
   <script src="resources/js/filter.js"></script>
-  <script src="resources/js/authorization.js"></script>
+  <script src="resources/js/services/services.js"></script>
+  <script src="resources/js/services/authenticate.js"></script>
+  <script src="resources/js/services/httpauth.js"></script>
+  <script src="resources/js/services/authorization.js"></script>
+  
 
   <script src="components/Menu/Menu.js"></script>
 
@@ -49,14 +55,10 @@
   <!-- Auth -->
   <script src="modules/auth/auth.js"></script>
   <script src="modules/auth/controllers/login.js"></script>
-
-  <!-- Auth -->
-  <script src="modules/landing/landing.js"></script>
-  <script src="modules/landing/controllers/landing.js"></script>
   
 </head>
 <body>
   <gepro-menu></gepro-menu>
-  <div class="container" ng-view></div>
+  <div class="container" ui-view></div>
 </body>
 </html>

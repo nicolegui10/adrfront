@@ -46,3 +46,10 @@ body {
 .navbar-brand>img.gep-inline{
     display: inline;
 }
+
+.eliminar-btn {
+    margin-right: 30px;
+}
+.margin-bottom {
+    margin-bottom: 20px;
+}

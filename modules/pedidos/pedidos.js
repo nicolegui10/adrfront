@@ -1,19 +1,22 @@
 angular.module('gepro.pedidos', [])
     .config([
-      '$routeProvider',
-      function ($routeProvider) {
+      '$stateProvider',
+      function ($stateProvider) {
 
-        $routeProvider
-            .when('/pedidos', {
+        $stateProvider
+            .state('pedidos', {
+              url:'/pedidos',
               controller: 'PedidosListarController',
-              templateUrl: 'modules/pedidos/views/listar.html',
+              templateUrl: 'modules/pedidos/views/listar.html'
             })
-            .when('/pedidos/crear', {
+            .state('crear-pedidos', {
+              url:'/pedidos/crear',
               controller: 'PedidosCrearController',
-              templateUrl: 'modules/pedidos/views/crear.html',
+              templateUrl: 'modules/pedidos/views/crear.html'
             })
-            .when('/pedidos/:pedidoId', {
+            .state('pedido', {
+              url:'/pedidos/:pedidoId',
               controller: 'PedidosVerController',
-              templateUrl: 'modules/pedidos/views/ver.html',
+              templateUrl: 'modules/pedidos/views/ver.html'
             });
       }]);

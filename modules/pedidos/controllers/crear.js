@@ -1,37 +1,54 @@
 angular.module('gepro.pedidos')
-    .controller('PedidosCrearController', function ($scope, $http, $location) {
+    .controller('PedidosCrearController', function (AuthService, $scope, $http, $state) {
+
+      var apiUrl = 'https://adr-utn.herokuapp.com/api/v1/';
+      $scope.options = {};
+
+      AuthService.isLogged().then(function () {
+            init();  
+          }, function() {
+            $state.go('/');
+          });
 
       $scope.pedido = {};
-
+      $scope.pedido.items = [];
       var init = function () {
-        $scope.lineaProducto = {};
+        $scope.productosNoCargados = true;
         $scope.lineasProducto = [];
-        $scope.idLineasProducto = [];
-
+        $scope.productoSeleccionado = {};
+        $scope.item = {};
         $http({
           method: 'GET',
-          url: 'api/productos'
-        }).then(function (response) {
-          $scope.productos = response.data;
-        });
-
-        $http({
-          method: 'GET',
-          url: 'api/proveedores'
+          url: apiUrl + 'proveedores'
         }).then(function (response) {
           $scope.proveedores = response.data;
         });
       };
 
-      $scope.crear = function () {
-        $scope.pedido.productos = $scope.lineasProducto;
+      $scope.loadProducts = function () {
+        $scope.pedido.proveedorId = $scope.options.selected;
+        $scope.productosNoCargados = false;
         $http({
+          method: 'GET',
+          url: apiUrl + 'proveedores/'+ $scope.options.selected +'/productos'
+        }).then(function (response) {
+          $scope.productos = response.data;
+        });
+      }
+
+      $scope.crear = function () {
+        console.log($scope.pedido);
+        var result = confirm ("Etas seguro?");
+        if (result) {
+          $http({
           method: 'POST',
-          url: 'api/pedidos',
+          url: apiUrl + 'pedidos',
           data: $scope.pedido
         }).then(function () {
-          $location.path('pedidos');
+          $state.go('pedidos');
         });
+        }
+        
       }
 
       function updateTotal() {
@@ -41,51 +58,38 @@ angular.module('gepro.pedidos')
         })
       };
 
-      $scope.getDescripcionById = function (id) {
+      /*$scope.getDescripcionById = function (id) {
         return $scope.productos.filter(function (producto) {
           return producto.id === id;
         })[0].descripcion;
-      };
+      };*/
+
 
       $scope.agregar = function () {
-        $scope.lineasProducto.push(angular.copy($scope.lineaProducto));
-        $scope.idLineasProducto.push($scope.lineaProducto.id);
-
-        $scope.lineaProducto = {};
-
+        var item = {
+          productoId: 0,
+          cantidad: 0
+        }
+        $scope.lineasProducto.push(angular.copy($scope.productoSeleccionado.selected));
+        console.log($scope.lineasProducto);
+        item.productoId = $scope.productoSeleccionado.selected.id;
+        item.cantidad = $scope.productoSeleccionado.selected.cantidad;
+        $scope.pedido.items.push(item);
+        $scope.productoSeleccionado = {};
         $scope.form.producto.$setPristine();
         $scope.form.precio.$setPristine();
         $scope.form.cantidad.$setPristine();
-
         updateTotal();
       };
 
       $scope.borrar = function (id) {
-        $scope.lineasProducto = $scope.lineasProducto.filter(function (linea) {
-          return linea.id !== id;
+        $scope.lineasProducto = $scope.lineasProducto.filter(function (selected) {
+          return selected.id !== id;
         });
-        $scope.idLineasProducto.splice($scope.idLineasProducto.indexOf(id), 1);
-        updateTotal();
-      };
-
-      $scope.sumar = function (id) {
-        $scope.lineasProducto.forEach(function (linea) {
-          if (linea.id === id) {
-            linea.cantidad++;
-          }
+        $scope.pedido.items = $scope.pedido.items.filter(function (item) {
+          return item.productoId !== id;
         });
         updateTotal();
-      };
-
-      $scope.restar = function (id) {
-        $scope.lineasProducto.forEach(function (linea) {
-          if (linea.id === id && linea.cantidad > 1) {
-            linea.cantidad--;
-          }
-        });
-        updateTotal();
-      };
-
-      init();
+      };     
 
     });
