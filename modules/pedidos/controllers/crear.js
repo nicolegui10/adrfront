@@ -27,6 +27,8 @@ angular.module('gepro.pedidos')
 
       $scope.loadProducts = function () {
         $scope.pedido.proveedorId = $scope.options.selected;
+        $scope.productoSeleccionado = {};
+        $scope.form.producto.$setPristine();
         $scope.productosNoCargados = false;
         $http({
           method: 'GET',
